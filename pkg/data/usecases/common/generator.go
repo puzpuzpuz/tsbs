@@ -2,11 +2,12 @@ package common
 
 import (
 	"fmt"
+	"strings"
+	"time"
+
 	"github.com/spf13/pflag"
 	"github.com/timescale/tsbs/internal/utils"
 	"github.com/timescale/tsbs/pkg/targets/constants"
-	"strings"
-	"time"
 )
 
 // Generator is a single entity which generates data from its respective measurements.
@@ -113,6 +114,8 @@ type BaseConfig struct {
 	Seed  int64
 	Debug int    `yaml:"debug,omitempty" mapstructure:"debug,omitempty"`
 	File  string `yaml:"file,omitempty" mapstructure:"file,omitempty"`
+
+	TableName string `yaml:"table-name,omitempty" mapstructure:"table-name,omitempty"`
 }
 
 func (c *BaseConfig) AddToFlagSet(fs *pflag.FlagSet) {
@@ -127,6 +130,7 @@ func (c *BaseConfig) AddToFlagSet(fs *pflag.FlagSet) {
 	fs.Int64("seed", 0, "PRNG seed (default: 0, which uses the current timestamp)")
 	fs.Int("debug", 0, "Control level of debug output")
 	fs.String("file", "", "Write the output to this path")
+	fs.String("table-name", "", "Custom table name")
 }
 
 func (c *BaseConfig) Validate() error {

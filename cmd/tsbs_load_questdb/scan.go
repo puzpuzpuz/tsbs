@@ -9,7 +9,7 @@ import (
 	"github.com/timescale/tsbs/pkg/targets"
 )
 
-const errNotThreeTuplesFmt = "parse error: line does not have 3 tuples, has %d"
+const errNotThreeTuplesFmt = "parse error: line does not have 2 tuples, has %d"
 
 var newLine = []byte("\n")
 
@@ -59,7 +59,7 @@ func (b *batch) Append(item data.LoadedPoint) {
 				metrics++
 			}
 		}
-		if tuples != 3 {
+		if tuples != 2 {
 			fatal(errNotThreeTuplesFmt, tuples)
 			return
 		}

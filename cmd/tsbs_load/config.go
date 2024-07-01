@@ -42,6 +42,7 @@ type FileDataSourceConfig struct {
 }
 
 type SimulatorDataSourceConfig struct {
+	TableName             string `yaml:"table-name" mapstructure:"table-name"`
 	Use                   string `yaml:"use-case" mapstructure:"use-case"`
 	Scale                 uint64
 	TimeStart             string `yaml:"timestamp-start" mapstructure:"timestamp-start"`

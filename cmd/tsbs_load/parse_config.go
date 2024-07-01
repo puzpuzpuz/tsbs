@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+
 	"github.com/blagojts/viper"
 	"github.com/timescale/tsbs/load"
 	"github.com/timescale/tsbs/pkg/data/source"
@@ -133,6 +134,7 @@ func convertDataSourceConfigToInternalRepresentation(format string, d *DataSourc
 				TimeStart: d.Simulator.TimeStart,
 				TimeEnd:   d.Simulator.TimeEnd,
 				Debug:     d.Simulator.Debug,
+				TableName: d.Simulator.TableName,
 			},
 			Limit:                 d.Simulator.Limit,
 			LogInterval:           d.Simulator.LogInterval,

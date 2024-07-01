@@ -1,9 +1,10 @@
 package devops
 
 import (
+	"time"
+
 	"github.com/timescale/tsbs/pkg/data"
 	"github.com/timescale/tsbs/pkg/data/usecases/common"
-	"time"
 )
 
 // A CPUOnlySimulator generates data similar to telemetry from Telegraf for only CPU metrics.
@@ -58,6 +59,8 @@ func (c *CPUOnlySimulatorConfig) NewSimulator(interval time.Duration, limit uint
 		maxPoints = limit
 	}
 	sim := &CPUOnlySimulator{&commonDevopsSimulator{
+		tableName: c.TableName,
+
 		madePoints: 0,
 		maxPoints:  maxPoints,
 

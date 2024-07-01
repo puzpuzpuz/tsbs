@@ -1,9 +1,10 @@
 package questdb
 
 import (
+	"io"
+
 	"github.com/timescale/tsbs/pkg/data"
 	"github.com/timescale/tsbs/pkg/data/serialize"
-	"io"
 )
 
 // Serializer writes a Point in a serialized form for MongoDB
@@ -71,8 +72,9 @@ func (s *Serializer) Serialize(p *data.Point, w io.Writer) (err error) {
 	if !firstFieldFormatted {
 		return nil
 	}
-	buf = append(buf, ' ')
-	buf = serialize.FastFormatAppend(p.Timestamp().UTC().UnixNano(), buf)
+	// Benchmark hack: skip the timestamp
+	// buf = append(buf, ' ')
+	// buf = serialize.FastFormatAppend(p.Timestamp().UTC().UnixNano(), buf)
 	buf = append(buf, '\n')
 	_, err = w.Write(buf)
 

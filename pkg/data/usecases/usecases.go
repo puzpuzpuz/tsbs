@@ -2,11 +2,12 @@ package usecases
 
 import (
 	"fmt"
+	"math"
+
 	"github.com/timescale/tsbs/internal/utils"
 	"github.com/timescale/tsbs/pkg/data/usecases/common"
 	"github.com/timescale/tsbs/pkg/data/usecases/devops"
 	"github.com/timescale/tsbs/pkg/data/usecases/iot"
-	"math"
 )
 
 const errCannotParseTimeFmt = "cannot parse time from string '%s': %v"
@@ -26,6 +27,8 @@ func GetSimulatorConfig(dgc *common.DataGeneratorConfig) (common.SimulatorConfig
 	switch dgc.Use {
 	case common.UseCaseDevops:
 		ret = &devops.DevopsSimulatorConfig{
+			TableName: dgc.TableName,
+
 			Start: tsStart,
 			End:   tsEnd,
 
@@ -35,6 +38,7 @@ func GetSimulatorConfig(dgc *common.DataGeneratorConfig) (common.SimulatorConfig
 		}
 	case common.UseCaseIoT:
 		ret = &iot.SimulatorConfig{
+
 			Start: tsStart,
 			End:   tsEnd,
 
@@ -44,6 +48,8 @@ func GetSimulatorConfig(dgc *common.DataGeneratorConfig) (common.SimulatorConfig
 		}
 	case common.UseCaseCPUOnly:
 		ret = &devops.CPUOnlySimulatorConfig{
+			TableName: dgc.TableName,
+
 			Start: tsStart,
 			End:   tsEnd,
 
@@ -53,6 +59,8 @@ func GetSimulatorConfig(dgc *common.DataGeneratorConfig) (common.SimulatorConfig
 		}
 	case common.UseCaseCPUSingle:
 		ret = &devops.CPUOnlySimulatorConfig{
+			TableName: dgc.TableName,
+
 			Start: tsStart,
 			End:   tsEnd,
 

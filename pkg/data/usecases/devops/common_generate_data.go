@@ -1,9 +1,10 @@
 package devops
 
 import (
+	"time"
+
 	"github.com/timescale/tsbs/pkg/data"
 	"github.com/timescale/tsbs/pkg/data/usecases/common"
-	"time"
 )
 
 // HostContext contains information needed to create a new host
@@ -16,6 +17,7 @@ type HostContext struct {
 }
 
 type commonDevopsSimulatorConfig struct {
+	TableName string
 	// Start is the beginning time for the Simulator
 	Start time.Time
 	// End is the ending time for the Simulator
@@ -43,6 +45,8 @@ func calculateEpochs(c commonDevopsSimulatorConfig, interval time.Duration) uint
 }
 
 type commonDevopsSimulator struct {
+	tableName string
+
 	madePoints uint64
 	maxPoints  uint64
 
@@ -127,6 +131,9 @@ func (s *commonDevopsSimulator) populatePoint(p *data.Point, measureIdx int) boo
 
 	// Populate measurement-specific tags and fields:
 	host.SimulatedMeasurements[measureIdx].ToPoint(p)
+	if s.tableName != "" {
+		p.SetMeasurementName([]byte(s.tableName))
+	}
 
 	ret := s.hostIndex < s.epochHosts
 	s.madePoints++
